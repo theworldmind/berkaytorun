@@ -849,25 +849,9 @@
         <em data-tr="Contact" data-en="İletişim">Contact</em>
       </div>
       <div class="contact">
-        <div class="links">
-          <a class="row" href="#" id="mailRow">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
-            <b data-tr="E-posta" data-en="Email">E-posta</b>
-            <span id="mail"></span>
-          </a>
-          <a class="row" id="liRow" target="_blank" rel="noopener">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="7" r="2.2"></circle><path d="M6 11v8"></path><path d="M12 19v-5a3 3 0 0 1 6 0v5"></path><path d="M12 19v-8"></path></svg>
-            <b>LinkedIn</b>
-            <span id="liName"></span>
-          </a>
-          <a class="row" id="igRow" target="_blank" rel="noopener">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"></rect><circle cx="12" cy="12" r="3.6"></circle><path d="M17 8.6h.01"></path></svg>
-            <b>Instagram</b>
-            <span id="igName"></span>
-          </a>
-        </div>
+        <div class="links" id="links"></div>
         <p class="status" id="copyStatus" aria-live="polite"></p>
-        <div class="ebar center ed blk"><button class="ebtn" type="button" data-act="contact">İletişim bilgilerini düzenle</button></div>
+        <div class="ebar center ed blk"><button class="ebtn" type="button" data-act="contact">İletişim bilgilerini düzenle</button><button class="ebtn" type="button" data-act="add-contact">+ İletişim ekle</button></div>
         <form class="cform" id="cform" hidden novalidate>
           <p class="cform-h" data-tr="Mesaj bırakın" data-en="Leave a message">Mesaj bırakın</p>
           <div class="fld"><label for="cfName" data-tr="Adınız" data-en="Your name">Adınız</label><input id="cfName" type="text" maxlength="120" autocomplete="name" required></div>
@@ -920,8 +904,8 @@
      AYARLAR
      ========================================================= */
   var CONFIG = {
-    url: '',
-    key: '',
+    url: 'https://jlabqxnsxbrmglurdvqo.supabase.co',
+    key: 'sb_publishable_ro2GA91NUw0GIZCneBUZWA_d81No6Bi',
     owner: 'berkaytoruntga@gmail.com'
   };
 
@@ -1004,6 +988,21 @@
     }
   };
 
+  /* İletişim satırı türleri: hepsi aynı stilde, altın çizgi ikonlu */
+  var CTYPES = {
+    email:     { tr: 'E-posta', en: 'Email', ph: 'ornek@gmail.com', icon: '<rect x="2.5" y="5" width="19" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path>' },
+    phone:     { tr: 'Telefon', en: 'Phone', ph: '+90 5xx xxx xx xx', icon: '<path d="M6.5 3.5h3l1.5 4.5-2 1.3a11 11 0 0 0 5.7 5.7l1.3-2 4.5 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7a2 2 0 0 1 2-2.2z"></path>' },
+    linkedin:  { tr: 'LinkedIn', en: 'LinkedIn', ph: 'https://www.linkedin.com/in/...', icon: '<circle cx="6" cy="7" r="2.2"></circle><path d="M6 11v8"></path><path d="M12 19v-5a3 3 0 0 1 6 0v5"></path><path d="M12 19v-8"></path>' },
+    instagram: { tr: 'Instagram', en: 'Instagram', ph: 'https://www.instagram.com/...', icon: '<rect x="3.5" y="5" width="17" height="14" rx="2.5"></rect><circle cx="12" cy="12" r="3.6"></circle><path d="M17 8.6h.01"></path>' },
+    x:         { tr: 'X', en: 'X', ph: 'https://x.com/...', icon: '<path d="M5 4.5l14 15M19 4.5l-14 15"></path>' },
+    youtube:   { tr: 'YouTube', en: 'YouTube', ph: 'https://www.youtube.com/@...', icon: '<rect x="2.5" y="6" width="19" height="12" rx="3"></rect><path d="M10.5 9.5v5l4.2-2.5z"></path>' },
+    github:    { tr: 'GitHub', en: 'GitHub', ph: 'https://github.com/...', icon: '<path d="M8.5 8l-4 4 4 4M15.5 8l4 4-4 4"></path>' },
+    message:   { tr: 'Mesaj', en: 'Message', ph: 'https://wa.me/90... ya da https://t.me/...', icon: '<path d="M4 5h16v11H9.5L5 19.5V16H4z"></path>' },
+    web:       { tr: 'Web sitesi', en: 'Website', ph: 'https://...', icon: '<circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path>' },
+    other:     { tr: 'Bağlantı', en: 'Link', ph: 'https://...', icon: '<path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"></path><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"></path>' }
+  };
+  var CTYPE_ORDER = ['email', 'phone', 'linkedin', 'instagram', 'x', 'youtube', 'github', 'message', 'web', 'other'];
+
   var PAGES = ['anasayfa', 'yazilarim', 'yazi', 'calismalar', 'album', 'hakkimda', 'iletisim'];
   var PAGE_NAMES = { anasayfa: 'Anasayfa', yazilarim: 'Yazılarım', calismalar: 'Çalışmalar', album: 'Albüm', hakkimda: 'Hakkımda', iletisim: 'İletişim' };
   var LINK_PAGES = ['anasayfa', 'yazilarim', 'calismalar', 'album', 'hakkimda', 'iletisim'];
@@ -1023,8 +1022,8 @@
   var ownerSession = false;
 
   var UI = {
-    tr: { copied: 'Adres kopyalandı.', selected: 'Adres seçildi — kopyalamak için basılı tut.', manual: 'Adresi elle seçip kopyalayabilirsin.', read: 'Oku', pdf: 'PDF', link: 'Bağlantı', none: '—', back: '← Yazılarım', inAlbum: 'Albümde gör', soon: 'Yakında.', photosSoon: 'Fotoğraflar yakında eklenecek.', sending: 'Gönderiliyor…', sent: 'Mesajınız iletildi. Teşekkürler.', formErr: 'Lütfen bütün alanları doldurun.', mailErr: 'E-posta adresi geçerli görünmüyor.', sendErr: 'Gönderilemedi. Biraz sonra tekrar deneyin.', pdfOpen: 'PDF’i aç' },
-    en: { copied: 'Address copied.', selected: 'Address selected — hold to copy.', manual: 'You can select and copy the address manually.', read: 'Read', pdf: 'PDF', link: 'Link', none: '—', back: '← Writing', inAlbum: 'See in album', soon: 'Coming soon.', photosSoon: 'Photographs coming soon.', sending: 'Sending…', sent: 'Your message has been sent. Thank you.', formErr: 'Please fill in every field.', mailErr: 'The email address does not look valid.', sendErr: 'Could not send. Please try again shortly.', pdfOpen: 'Open the PDF' }
+    tr: { copied: 'Kopyalandı.', selected: 'Adres seçildi — kopyalamak için basılı tut.', manual: 'Adresi elle seçip kopyalayabilirsin.', read: 'Oku', pdf: 'PDF', link: 'Bağlantı', none: '—', back: '← Yazılarım', inAlbum: 'Albümde gör', soon: 'Yakında.', photosSoon: 'Fotoğraflar yakında eklenecek.', sending: 'Gönderiliyor…', sent: 'Mesajınız iletildi. Teşekkürler.', formErr: 'Lütfen bütün alanları doldurun.', mailErr: 'E-posta adresi geçerli görünmüyor.', sendErr: 'Gönderilemedi. Biraz sonra tekrar deneyin.', pdfOpen: 'PDF’i aç' },
+    en: { copied: 'Copied.', selected: 'Address selected — hold to copy.', manual: 'You can select and copy the address manually.', read: 'Read', pdf: 'PDF', link: 'Link', none: '—', back: '← Writing', inAlbum: 'See in album', soon: 'Coming soon.', photosSoon: 'Photographs coming soon.', sending: 'Sending…', sent: 'Your message has been sent. Thank you.', formErr: 'Please fill in every field.', mailErr: 'The email address does not look valid.', sendErr: 'Could not send. Please try again shortly.', pdfOpen: 'Open the PDF' }
   };
 
   /* ---------------- yardımcılar ---------------- */
@@ -1129,6 +1128,16 @@
     c.about = bi(c.about);
     c.contact = c.contact || {};
     if (typeof c.contact.form !== 'boolean') { c.contact.form = true; }
+    if (!Array.isArray(c.contact.items)) {
+      c.contact.items = [];
+      if (c.contact.email) { c.contact.items.push({ type: 'email', value: c.contact.email, label: bi(), display: '' }); }
+      if (c.contact.linkedin) { c.contact.items.push({ type: 'linkedin', value: c.contact.linkedin, label: bi(), display: '' }); }
+      if (c.contact.instagram) { c.contact.items.push({ type: 'instagram', value: c.contact.instagram, label: bi(), display: '' }); }
+    }
+    c.contact.items.forEach(function (it) { it.type = CTYPES[it.type] ? it.type : 'other'; it.label = bi(it.label); it.display = it.display || ''; it.value = it.value || ''; });
+    delete c.contact.email; delete c.contact.linkedin; delete c.contact.instagram;
+    c.heroTitle = c.heroTitle || {};
+    c.heroTitle.on = !!c.heroTitle.on; c.heroTitle.title = bi(c.heroTitle.title); c.heroTitle.link = c.heroTitle.link || 'anasayfa';
     return c;
   }
 
@@ -1158,21 +1167,25 @@
       var on = k === heroIdx;
       shots[k].classList.toggle('on', on);
       if (caps[k]) { caps[k].classList.toggle('on', on); caps[k].tabIndex = on ? 0 : -1; }
+      if (caps[k] && caps[k].classList.contains('fixed')) { caps[k].style.transition = 'none'; }
     }
     clearTimeout(heroTimer);
     if (n > 1) { heroTimer = setTimeout(function () { heroShow(heroIdx + 1, false); }, 8000); }
   }
   function renderHero() {
     if (root.classList.contains('curtain-down')) { return; }
-    var key = JSON.stringify(C.hero) + lang;
+    var key = JSON.stringify(C.hero) + JSON.stringify(C.heroTitle) + lang;
     if (key === heroKey) { return; }
     heroKey = key;
     var shots = $('heroShots'), caps = $('heroCaps');
     shots.textContent = ''; caps.textContent = '';
     C.hero.forEach(function (s, i) {
       var d = el('div', 'shot'); d.style.backgroundImage = bg(s.src); d.style.backgroundPosition = s.pos; shots.appendChild(d);
-      var a = el('a'); a.href = '#' + (LINK_PAGES.indexOf(s.link) > -1 ? s.link : 'anasayfa');
-      a.appendChild(el('span', 't metal-gold', L(s.title))); caps.appendChild(a);
+      var gen = C.heroTitle.on && L(C.heroTitle.title);
+      var link = gen ? C.heroTitle.link : s.link;
+      var a = el('a'); a.href = '#' + (LINK_PAGES.indexOf(link) > -1 ? link : 'anasayfa');
+      a.appendChild(el('span', 't metal-gold', gen ? L(C.heroTitle.title) : L(s.title))); caps.appendChild(a);
+      if (gen) { a.classList.add('fixed'); }
     });
     heroShow(Math.min(heroIdx, Math.max(0, C.hero.length - 1)), false);
   }
@@ -1358,21 +1371,42 @@
     var ab = $('aboutText'); ab.textContent = '';
     L(C.about).split(/\n\s*\n/).forEach(function (para) { if (para.trim()) { ab.appendChild(el('p', null, para.trim())); } });
     var c = C.contact;
-    $('mail').textContent = c.email || ''; $('mailRow').style.display = c.email ? '' : 'none';
-    setSocial('liRow', 'liName', c.linkedin, /linkedin\.com\/in\/([^\/?#]+)/i, '');
-    setSocial('igRow', 'igName', c.instagram, /instagram\.com\/([^\/?#]+)/i, '@');
+    renderContacts();
     $('cform').hidden = !(c.form && sb);
     $('footText').textContent = C.settings.footer || '';
     renderBanner();
     if (isAdmin) { markDirty(); makeSortable(); }
   }
 
-  function setSocial(rowId, nameId, url, re, prefix) {
-    var row = $(rowId);
-    if (!okUrl(url)) { row.style.display = 'none'; return; }
-    row.style.display = ''; row.href = url.trim();
-    var m = String(url).match(re);
-    $(nameId).textContent = m ? prefix + decodeURIComponent(m[1]) : url.replace(/^https?:\/\/(www\.)?/i, '');
+
+
+  function contactShown(it) {
+    var v = String(it.value || '').trim();
+    if (it.display) { return it.display; }
+    if (it.type === 'linkedin') { var m = v.match(/linkedin\.com\/in\/([^\/?#]+)/i); if (m) { return decodeURIComponent(m[1]); } }
+    if (it.type === 'instagram') { var m2 = v.match(/instagram\.com\/([^\/?#]+)/i); if (m2) { return '@' + decodeURIComponent(m2[1]); } }
+    if (it.type === 'x') { var m3 = v.match(/(?:x|twitter)\.com\/([^\/?#]+)/i); if (m3) { return '@' + decodeURIComponent(m3[1]); } }
+    if (it.type === 'github') { var m4 = v.match(/github\.com\/([^\/?#]+)/i); if (m4) { return decodeURIComponent(m4[1]); } }
+    return v.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, '');
+  }
+  function renderContacts() {
+    var box = $('links'); box.textContent = '';
+    C.contact.items.forEach(function (it, i) {
+      var t = CTYPES[it.type] || CTYPES.other, v = String(it.value || '').trim();
+      if (!v) { return; }
+      var a = el('a', 'row');
+      if (it.type === 'email') { a.href = '#'; a.setAttribute('data-copy', v); }
+      else if (it.type === 'phone') { a.href = 'tel:' + v.replace(/[^\d+]/g, ''); }
+      else if (okUrl(v)) { a.href = v; a.target = '_blank'; a.rel = 'noopener'; }
+      else { a.href = '#'; a.setAttribute('data-copy', v); }
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'ic'); svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('aria-hidden', 'true');
+      svg.innerHTML = t.icon;
+      a.appendChild(svg);
+      a.appendChild(el('b', null, L(it.label) || t[lang] || t.tr));
+      a.appendChild(el('span', null, contactShown(it)));
+      box.appendChild(a);
+    });
   }
 
   /* ---------------- sayfa yönlendirme ---------------- */
@@ -1490,12 +1524,14 @@
   });
   viewer.addEventListener('click', function () { viewer.classList.remove('on'); });
 
-  $('mailRow').addEventListener('click', function (ev) {
+  document.addEventListener('click', function (ev) {
+    var row = ev.target.closest ? ev.target.closest('[data-copy]') : null;
+    if (!row) { return; }
     ev.preventDefault();
-    var mail = $('mail'), status = $('copyStatus'), text = mail.textContent.trim();
+    var status = $('copyStatus'), text = row.getAttribute('data-copy'), span = row.querySelector('span');
     var done = function () { status.textContent = UI[lang].copied; };
     var fallback = function () {
-      try { var r = document.createRange(); r.selectNodeContents(mail); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); status.textContent = UI[lang].selected; }
+      try { var r = document.createRange(); r.selectNodeContents(span); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); status.textContent = UI[lang].selected; }
       catch (e) { status.textContent = UI[lang].manual; }
     };
     if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, fallback); } else { fallback(); }
@@ -1927,7 +1963,7 @@
         { key: 'title', label: 'Altın başlık', bi: true },
         { key: 'link', label: 'Başlığa dokununca açılacak sayfa', type: 'select', options: LINK_PAGES.map(function (p) { return [p, PAGE_NAMES[p]]; }) }
       ],
-      validate: function (v) { return v.title.tr ? '' : 'Başlık boş olamaz.'; },
+      validate: function (v) { return (v.title.tr || C.heroTitle.on) ? '' : 'Başlık boş olamaz (ya da kapak yöneticisinden genel başlığı aç).'; },
       onOk: function (v) {
         var n = { src: s.src, pos: pos, link: v.link, title: v.title };
         if (isNew) { C.hero.push(n); } else { C.hero[i] = n; }
@@ -2041,9 +2077,30 @@
     p.appendChild(acts([btn('Vazgeç', closeSheet, 'ghost')]));
   }
 
+  function heroTitleForm() {
+    var g = C.heroTitle;
+    openForm({
+      title: 'Genel başlık',
+      values: { on: g.on, title: g.title, link: g.link },
+      fields: [
+        { key: 'on', label: 'Bütün kapak fotoğraflarında tek başlık göster', type: 'checkbox' },
+        { key: 'title', label: 'Başlık', bi: true, placeholder: 'Örn. Deniz, Kutup ve İklim Hukuku' },
+        { key: 'link', label: 'Başlığa dokununca açılacak sayfa', type: 'select', options: LINK_PAGES.map(function (p) { return [p, PAGE_NAMES[p]]; }) }
+      ],
+      validate: function (v) { return v.on && !v.title.tr ? 'Başlık boş olamaz.' : ''; },
+      onOk: function (v) { C.heroTitle = { on: !!v.on, title: v.title, link: v.link }; heroKey = ''; render(); setTimeout(heroManager, 40); }
+    });
+  }
+
   function heroManager() {
     var p = openPanel('Kapak fotoğrafları');
     p.appendChild(el('p', 'hint', 'Anasayfada sırayla dönen fotoğraflar. Sürükleyerek sırala.'));
+    var gt = el('div', 'rowx');
+    var gh = el('div', 'h'); gh.appendChild(el('b', null, 'Genel başlık'));
+    gh.appendChild(el('span', null, C.heroTitle.on && L(C.heroTitle.title) ? L(C.heroTitle.title) : 'Kapalı — her fotoğrafın kendi başlığı görünür'));
+    gt.appendChild(gh);
+    var gbs = el('div', 'row-btns'); gbs.appendChild(btn('Genel başlığı düzenle', heroTitleForm)); gt.appendChild(gbs);
+    p.appendChild(gt);
     var list = el('div', 'slides');
     C.hero.forEach(function (s, i) {
       var r = el('div', 'slide-row'); r.setAttribute('data-i', i);
@@ -2195,28 +2252,66 @@
         cb.square = true; pickFiles(false, 'image', cb);
         break;
       }
-      case 'contact': {
-        var c = C.contact;
-        openForm({
-          title: 'İletişim bilgileri',
-          values: { email: c.email, linkedin: c.linkedin, instagram: c.instagram, form: c.form },
-          fields: [
-            { key: 'email', label: 'E-posta', type: 'email' },
-            { key: 'linkedin', label: 'LinkedIn adresi', type: 'url', placeholder: 'https://www.linkedin.com/in/...' },
-            { key: 'instagram', label: 'Instagram adresi', type: 'url', placeholder: 'https://www.instagram.com/...', hint: 'Boş bırakılan satır sitede gizlenir.' },
-            { key: 'form', label: 'İletişim formunu göster', type: 'checkbox' }
-          ],
-          validate: function (v) {
-            if (v.linkedin && !okUrl(v.linkedin)) { return 'LinkedIn adresi https:// ile başlamalı.'; }
-            if (v.instagram && !okUrl(v.instagram)) { return 'Instagram adresi https:// ile başlamalı.'; }
-            return '';
-          },
-          onOk: function (v) { C.contact = { email: v.email, linkedin: v.linkedin, instagram: v.instagram, form: !!v.form }; render(); }
-        });
-        break;
-      }
+      case 'contact': contactManager(); break;
+      case 'add-contact': contactForm(null); break;
     }
   }, true);
+
+
+  function contactManager() {
+    var p = openPanel('İletişim bilgileri');
+    p.appendChild(el('p', 'hint', 'Sitede bu sırayla görünür. Oklarla sırala.'));
+    var list = el('div', 'rows');
+    C.contact.items.forEach(function (it, i) {
+      var t = CTYPES[it.type] || CTYPES.other;
+      var r = el('div', 'rowx'); r.setAttribute('data-i', i);
+      var h = el('div', 'h'); h.appendChild(el('b', null, L(it.label) || t.tr)); h.appendChild(el('span', null, contactShown(it)));
+      r.appendChild(h);
+      var bs = el('div', 'row-btns');
+      bs.appendChild(btn('Düzenle', function () { contactForm(i); }));
+      bs.appendChild(btn('↑', function () { move(C.contact.items, i, -1); render(); contactManager(); }, 'ghost'));
+      bs.appendChild(btn('↓', function () { move(C.contact.items, i, 1); render(); contactManager(); }, 'ghost'));
+      bs.appendChild(btn('Sil', function () { C.contact.items.splice(i, 1); render(); contactManager(); }, 'danger'));
+      r.appendChild(bs); list.appendChild(r);
+    });
+    if (!C.contact.items.length) { list.appendChild(el('p', 'hint', 'Henüz iletişim bilgisi yok.')); }
+    p.appendChild(list);
+    var lab = el('label', 'chk'); var cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = !!C.contact.form;
+    cb.addEventListener('change', function () { C.contact.form = cb.checked; render(); });
+    lab.appendChild(cb); lab.appendChild(el('span', null, 'İletişim formunu göster')); p.appendChild(lab);
+    p.appendChild(acts([btn('+ İletişim ekle', function () { contactForm(null); }), btn('Kapat', closeSheet, 'ghost')]));
+  }
+
+  function contactForm(i) {
+    var isNew = i == null;
+    var it = isNew ? { type: 'email', value: '', label: bi(), display: '' } : C.contact.items[i];
+    var ctl = openForm({
+      title: isNew ? 'İletişim ekle' : 'İletişimi düzenle',
+      values: { type: it.type, value: it.value, label: it.label, display: it.display },
+      fields: [
+        { key: 'type', label: 'Tür', type: 'select', options: CTYPE_ORDER.map(function (k) { return [k, CTYPES[k].tr]; }) },
+        { key: 'value', label: 'Adres / numara', placeholder: CTYPES[it.type].ph, hint: 'E-posta adresi, telefon numarası ya da https:// ile başlayan bağlantı.' },
+        { key: 'label', label: 'Başlık (isteğe bağlı)', bi: true, hint: 'Boş bırakırsan türün adı yazar. Örn. "Okul e-postası".' },
+        { key: 'display', label: 'Sağda görünecek yazı (isteğe bağlı)', hint: 'Boş bırakırsan adresten otomatik çıkarılır.' }
+      ],
+      validate: function (v) {
+        var val = (v.value || '').trim();
+        if (!val) { return 'Adres ya da numara boş olamaz.'; }
+        if (v.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { return 'E-posta adresi geçerli görünmüyor.'; }
+        if (v.type === 'phone' && !/^[+\d][\d\s().-]{5,}$/.test(val)) { return 'Telefon numarası geçerli görünmüyor.'; }
+        if (v.type !== 'email' && v.type !== 'phone' && !okUrl(val)) { return 'Bağlantı https:// ile başlamalı.'; }
+        return '';
+      },
+      onOk: function (v) {
+        var n = { type: v.type, value: v.value.trim(), label: v.label, display: (v.display || '').trim() };
+        if (isNew) { C.contact.items.push(n); } else { C.contact.items[i] = n; }
+        render(); setTimeout(contactManager, 40);
+      }
+    });
+    if (ctl.type && ctl.type.node && ctl.value && ctl.value.node) {
+      ctl.type.node.addEventListener('change', function () { ctl.value.node.placeholder = CTYPES[ctl.type.node.value].ph; });
+    }
+  }
 
   function addPhotos(i) {
     pickFiles(true, 'image', async function (list) {
@@ -2475,6 +2570,7 @@
     });
     a.album.forEach(function (s) { if (!sbm[s.id]) { out.push('Albüm silindi: ' + L(s.title)); } });
     if (JSON.stringify(a.hero) !== JSON.stringify(b.hero)) { out.push('Kapak fotoğrafları değişti'); }
+    if (JSON.stringify(a.heroTitle) !== JSON.stringify(b.heroTitle)) { out.push('Kapak genel başlığı değişti'); }
     if (JSON.stringify(a.lead) !== JSON.stringify(b.lead)) { out.push('Giriş cümlesi değişti'); }
     if (JSON.stringify(a.about) !== JSON.stringify(b.about)) { out.push('Hakkımda metni değişti'); }
     if (a.avatar !== b.avatar) { out.push('Profil fotoğrafı değişti'); }
@@ -2552,6 +2648,7 @@
   function clearAuto() { try { localStorage.removeItem('bt-autosave'); } catch (e) {} }
 
   /* ---- giriş / çıkış ---- */
+  var IN_PREVIEW = /(^|\.)(claude\.ai|claudeusercontent\.com|anthropic\.com)$/i.test(location.hostname || '');
   function configured() { return CONFIG.url.indexOf('http') === 0 && CONFIG.key.length > 20 && !!sb; }
 
   async function enterAdmin() {
@@ -2604,7 +2701,7 @@
     }
     if (!configured()) {
       var p = openPanel('Giriş');
-      p.appendChild(el('p', null, 'Bu, Claude içindeki önizleme. Burada giriş yapılamıyor; giriş ve düzenleme, index.html dosyasını yayınladığın sitede çalışır.'));
+      p.appendChild(el('p', null, IN_PREVIEW ? 'Bu, Claude içindeki önizleme. Burada giriş yapılamıyor; giriş ve düzenleme theworldmind.github.io/berkaytorun adresindeki sitede çalışır.' : 'Giriş sistemine bağlanılamadı. İnternet bağlantını kontrol edip sayfayı yenile.'));
       p.appendChild(acts([btn('Kapat', closeSheet, 'ghost')]));
       return;
     }
@@ -2641,7 +2738,7 @@
   show(startHash === 'giris' ? 'anasayfa' : startHash, false);
 
   async function connect() {
-    if (!(CONFIG.url.indexOf('http') === 0 && CONFIG.key.length > 20)) { return; }
+    if (IN_PREVIEW || !(CONFIG.url.indexOf('http') === 0 && CONFIG.key.length > 20)) { return; }
     if (!window.supabase || !window.supabase.createClient) { return; }
     try { sb = window.supabase.createClient(CONFIG.url, CONFIG.key, { auth: { persistSession: true, autoRefreshToken: true } }); } catch (e) { sb = null; return; }
     var session = null;
